@@ -1,4 +1,4 @@
-# SimpleBlockchain-10 (still working)
+# SimpleBlockchain-10 
 add network based on simple block chain-9
 
 ## 区块链网络
