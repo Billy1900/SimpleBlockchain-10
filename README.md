@@ -1,6 +1,35 @@
-# SimpleBlockchain-10 
+# SimpleBlockchain-10 English Version
 add network based on simple block chain-9
+## Blockchain network
+The blockchain network is decentralized, which means that there is no server, and the client does not need to rely on the server to obtain or process data. In the blockchain network, there are nodes, and each node is a full-fledged member of the network. The node is everything: it is both a client and a server. This needs to be kept in mind, because this is very different from traditional web applications.
 
+The blockchain network is a P2P (Peer-to-Peer, end-to-end) network, that is, nodes are directly connected to other nodes. Its topology is flat, because there is no hierarchy in the world of nodes.
+
+## Node role
+Although nodes have complete and mature attributes, they can also play different roles in the network. such as:
+
+1. Miners Such nodes run on powerful or dedicated hardware (such as ASIC), and their only goal is to mine new blocks as quickly as possible. Miners are the only role in the blockchain that may use proof of work, because mining actually means solving the PoW problem. In the blockchain of Proof-of-Stake, there is no mining.
+
+2. Full nodes These nodes verify the validity of the blocks mined by miners and confirm transactions. For this, they must have a complete copy of the blockchain. At the same time, all nodes perform routing operations to help other nodes discover each other. For the network, a very important section is to have enough full nodes. Because it is these nodes that perform the decision-making function: they determine the validity of a block or a transaction.
+
+3. SPV SPV stands for Simplified Payment Verification, simple payment verification. These nodes do not store a copy of the entire blockchain, but can still verify transactions (but not all transactions, but a subset of transactions, such as transactions sent to a specified address). An SPV node depends on a full node to obtain data. There may be multiple SPV nodes connected to a full node. SPV makes wallet applications possible: a person does not need to download the entire blockchain, but can still verify his transactions.
+
+## Network Simplification
+In order to implement the network in the current blockchain prototype, I had to simplify some things. Because I don't have so many computers to simulate a multi-node network. Of course, we can use virtual machines or Docker to solve this problem. Therefore, we want to run multiple blockchain nodes on a machine, and hope that they have different addresses. In order to achieve this, we will use the port number as the node identifier instead of the IP address. For example, there will be nodes with such addresses: 127.0.0.1:3000, 127.0.0.1:3001, 127.0.0.1:3002, etc. We call it the port node ID and use the environment variable NODE_ID to set them. Therefore, you can open multiple terminal windows and set different NODE_IDs to run different nodes.
+
+This method also requires different blockchain and wallet files. They must now be named depending on the node ID, such as blockchain_3000.db, blockchain_30001.db, wallet_3000.db, wallet_30001.db, etc.
+
+
+Hard-coding an address in Bitcoin Core has proven to be an error: because the node may be attacked or shut down, this will cause new nodes to be unable to join the network. In Bitcoin Core, DNS seeds are hard-coded. Although these are not nodes, the DNS server knows the addresses of some nodes. When you start a brand new Bitcoin Core, it will connect to a seed node, get the full node list, and then download the blockchain from these nodes.
+
+However, in the current implementation, it is impossible to achieve complete decentralization because of the characteristics of centralization. We will have three nodes:
+
+- A central node. All other nodes will connect to this node, and this node will send data between other nodes.
+- A miner node. This node will store new transactions in the memory pool, and when there are enough transactions, it will pack and mine a new block.
+- A wallet node. This node will be used to send coins between wallets. But unlike the SPV node, it stores a complete copy of the blockchain.
+
+
+# SimpleBlockchain-10 Chinese Version
 ## 区块链网络
 区块链网络是去中心化的，这意味着没有服务器，客户端也不需要依赖服务器来获取或处理数据。在区块链网络中，有的是节点，每个节点是网络的一个完全（full-fledged）成员。节点就是一切：它既是一个客户端，也是一个服务器。这一点需要牢记于心，因为这与传统的网页应用非常不同。
 
@@ -28,3 +57,4 @@ add network based on simple block chain-9
 - 一个中心节点。所有其他节点都会连接到这个节点，这个节点会在其他节点之间发送数据。
 - 一个矿工节点。这个节点会在内存池中存储新的交易，当有足够的交易时，它就会打包挖出一个新块。
 - 一个钱包节点。这个节点会被用作在钱包之间发送币。但是与 SPV 节点不同，它存储了区块链的一个完整副本。
+
